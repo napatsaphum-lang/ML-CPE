@@ -1,10 +1,11 @@
-# LAB02 - Data Preprocessing
+# NASA JPL GRACE Monthly Land Water Storage Anomalies
+## Data Preprocessing and Data Quality Analysis
 
 ## Overview
 
-This project focuses on the Data Preprocessing process using the NASA JPL GRACE / GRACE-FO Monthly Land Water Storage Anomalies dataset.
+This project focuses on Data Preprocessing and Data Quality Analysis using the NASA JPL GRACE Monthly Land Water Storage Anomalies dataset.
 
-The purpose of this lab is to explore, inspect, clean, transform, and prepare data before using it for Machine Learning.
+The purpose of this project is to explore, inspect, clean, transform, visualize, and prepare the dataset before applying Machine Learning techniques.
 
 ---
 
@@ -15,13 +16,13 @@ The purpose of this lab is to explore, inspect, clean, transform, and prepare da
 - Apply appropriate Data Cleaning and Data Transformation techniques.
 - Apply Label Encoding and One-Hot Encoding to prepare categorical data.
 - Use Python and related libraries to perform Data Preprocessing.
-- Present the results and source code through GitHub.
+- Present the results, visualizations, and source code through GitHub.
 
 ---
 
 ## Dataset
 
-**Dataset:** NASA JPL GRACE / GRACE-FO Monthly Land Water Storage Anomalies
+**Dataset Name:** NASA JPL GRACE Monthly Land Water Storage Anomalies
 
 **Dataset File:**
 
@@ -32,8 +33,6 @@ The dataset contains monthly land water storage anomaly information related to t
 ### Dataset Source
 
 The dataset used in this project was obtained from Kaggle.
-
-**Dataset Name:** NASA JPL GRACE Monthly Land Water Storage Anomalies
 
 **Platform:** Kaggle
 
@@ -326,6 +325,8 @@ GRACE and GRACE Follow-On (GRACE-FO) Missions.
 
 ## Conclusion
 
-This lab demonstrates the main steps of Data Preprocessing, including Dataset Exploration, Missing Value Handling, Duplicate Removal, Inconsistent Data Correction, Data Type Conversion, Outlier Detection, and Data Encoding.
+This project demonstrates the main steps of Data Preprocessing using the NASA JPL GRACE Monthly Land Water Storage Anomalies dataset.
+
+The workflow includes Dataset Exploration, Missing Value Handling, Duplicate Removal, Inconsistent Data Correction, Data Type Conversion, Outlier Detection, Correlation Analysis, and Data Encoding.
 
 The preprocessing process improves data quality and prepares the dataset for further analysis and Machine Learning applications.
