@@ -27,13 +27,27 @@ The purpose of this lab is to explore, inspect, clean, transform, and prepare da
 
 `GRACE_GRACE-FO_Months_RL06.csv`
 
-The dataset contains monthly information related to the GRACE and GRACE-FO satellite missions.
+The dataset contains monthly land water storage anomaly information related to the NASA GRACE and GRACE-FO satellite missions.
+
+### Dataset Source
+
+The dataset used in this project was obtained from Kaggle.
+
+**Dataset Name:** NASA JPL GRACE Monthly Land Water Storage Anomalies
+
+**Platform:** Kaggle
+
+**Dataset Publisher:** Shuvo Kumar Basak
+
+**Original Data Source:** NASA Jet Propulsion Laboratory (JPL)
+
+[View Dataset on Kaggle](https://www.kaggle.com/datasets/shuvokumarbasak4004/nasa-jpl-grace-monthly-land-water-storageanomalies)
 
 ---
 
 ## Dataset Exploration
 
-The dataset was initially explored to understand its structure and quality.
+The dataset was initially explored to understand its structure and data quality.
 
 The following information was examined:
 
@@ -171,11 +185,11 @@ Columns containing date or time information were identified and converted into t
 
 Mean and Median values were compared for numerical features.
 
-**Mean**
+### Mean
 
 The Mean represents the average value of the data but can be strongly affected by extreme values or Outliers.
 
-**Median**
+### Median
 
 The Median represents the middle value of the dataset and is less affected by Outliers.
 
@@ -290,6 +304,23 @@ Run the Python program:
     python Data_preprocessing.py
 
 After running the program, the cleaned datasets and visualization images will be generated automatically.
+
+---
+
+## References
+
+### Dataset
+
+Shuvo Kumar Basak.  
+**NASA JPL GRACE Monthly Land Water Storage Anomalies.**  
+Kaggle Dataset.
+
+[View Original Dataset on Kaggle](https://www.kaggle.com/datasets/shuvokumarbasak4004/nasa-jpl-grace-monthly-land-water-storageanomalies)
+
+### Original Data Source
+
+NASA Jet Propulsion Laboratory (JPL)  
+GRACE and GRACE Follow-On (GRACE-FO) Missions.
 
 ---
 
