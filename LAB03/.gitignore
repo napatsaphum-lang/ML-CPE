@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+age_gender.csv
+*.png
+.vscode/
