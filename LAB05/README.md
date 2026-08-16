@@ -4,8 +4,6 @@
 
 This laboratory applies the **Support Vector Machine (SVM)** algorithm to classify the Iris dataset and compare the performance of different SVM kernel functions.
 
-ใบงานนี้เป็นการทดลองใช้งาน Support Vector Machine (SVM) สำหรับการจำแนกข้อมูล โดยใช้ Iris Dataset เป็นชุดข้อมูลในการทดลอง
-
 ---
 
 ## Objectives
