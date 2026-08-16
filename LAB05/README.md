@@ -2,40 +2,46 @@
 
 ## Support Vector Machine and SVM Applications
 
-This laboratory applies the **Support Vector Machine (SVM)** algorithm to a classification problem using the Iris dataset.
+This laboratory applies the **Support Vector Machine (SVM)** algorithm to classify the Iris dataset and compare the performance of different SVM kernel functions.
 
-The main objective is to study SVM classification and compare the performance of different SVM kernel functions.
+ใบงานนี้เป็นการทดลองใช้งาน Support Vector Machine (SVM) สำหรับการจำแนกข้อมูล โดยใช้ Iris Dataset เป็นชุดข้อมูลในการทดลอง
+
+---
 
 ## Objectives
 
-- Apply Support Vector Machine (SVM) to classify a selected dataset.
-- Explore and preprocess the dataset before training.
-- Standardize the input features.
-- Train SVM models using different kernel functions.
-- Compare the performance of Linear, Polynomial, and RBF kernels.
-- Evaluate each model using accuracy.
-- Display prediction results from the test dataset.
+The objectives of this laboratory are:
+
+* Apply Support Vector Machine (SVM) for classification.
+* Select and explore the Iris dataset.
+* Preprocess and standardize the input features before training.
+* Train SVM models using three different kernels.
+* Compare the performance of Linear, Polynomial, and RBF kernels.
+* Evaluate each model using Accuracy.
+* Display prediction results from the testing dataset.
+
+---
 
 ## Dataset
 
-This laboratory uses the **Iris Dataset**.
+This laboratory uses the **Iris Dataset** for classification.
 
-The dataset contains 150 samples of Iris flowers with four input features:
+The dataset contains **150 samples** and four input features:
 
-| Feature | Description |
-|---|---|
-| SepalLengthCm | Sepal length in centimeters |
-| SepalWidthCm | Sepal width in centimeters |
-| PetalLengthCm | Petal length in centimeters |
-| PetalWidthCm | Petal width in centimeters |
+| Feature         | Description                 |
+| --------------- | --------------------------- |
+| `SepalLengthCm` | Sepal length in centimeters |
+| `SepalWidthCm`  | Sepal width in centimeters  |
+| `PetalLengthCm` | Petal length in centimeters |
+| `PetalWidthCm`  | Petal width in centimeters  |
 
-The target variable is `Species`.
+The target variable is `Species`, which contains three classes:
 
-There are three classes:
+* Iris-setosa
+* Iris-versicolor
+* Iris-virginica
 
-- Iris-setosa
-- Iris-versicolor
-- Iris-virginica
+---
 
 ## Project Structure
 
@@ -52,120 +58,134 @@ LAB05/
 └── requirements.txt
 ```
 
+---
+
 ## Workflow
 
 ```text
 Iris Dataset
-     |
-     v
+      |
+      v
 Load Dataset
-     |
-     v
+      |
+      v
 Explore Dataset
-     |
-     v
+      |
+      v
 Check Missing Values
-     |
-     v
+      |
+      v
 Select Features and Target
-     |
-     v
+      |
+      v
 Train / Test Split
-     |
-     v
+      |
+      v
 Standardization
-     |
-     v
+      |
+      v
 +------------+------------+------------+
 |   Linear   | Polynomial |    RBF     |
 +------------+------------+------------+
-     |             |             |
-     v             v             v
-   Train         Train         Train
-     |             |             |
-     v             v             v
-  Predict       Predict       Predict
-     |             |             |
-     v             v             v
- Accuracy      Accuracy      Accuracy
-     \             |             /
-      \            |            /
-       +-----------+-----------+
+      |            |            |
+      v            v            v
+    Train        Train        Train
+      |            |            |
+      v            v            v
+   Predict      Predict      Predict
+      |            |            |
+      v            v            v
+  Accuracy     Accuracy     Accuracy
+       \           |           /
+        \          |          /
+         +---------+---------+
                    |
                    v
-           Compare Results
+             Compare Results
 ```
+
+---
 
 ## Data Exploration
 
-The dataset is checked before model training.
+Before training the SVM models, the dataset is explored by checking:
 
-The program displays:
-
-- First five rows of the dataset
-- Number of rows and columns
-- Missing values
-- Number of samples in each species
+* First five rows of the dataset
+* Number of rows and columns
+* Missing values
+* Number of samples in each species
 
 ### Iris Species Distribution
 
+The graph below shows the number of samples for each Iris species.
+
 ![Number of Iris Species](images/species_count.png)
+
+---
 
 ## Data Visualization
 
-Petal Length and Petal Width are used to visualize the distribution of the three Iris species.
+The scatter plot shows the relationship between **Petal Length** and **Petal Width** for the three Iris species.
 
 ![Iris Dataset Scatter Plot](images/iris_scatter.png)
 
-## Data Preprocessing
+กราฟใช้สำหรับดูการกระจายตัวของข้อมูล Iris แต่ละ Species จาก Petal Length และ Petal Width
 
-The input features are separated from the target variable.
+---
+
+## Data Preprocessing
 
 The dataset is divided into:
 
-- 80% Training Data
-- 20% Testing Data
+* **80% Training Data**
+* **20% Testing Data**
 
-The input features are standardized using `StandardScaler` before training the SVM models.
+The four input features are standardized using `StandardScaler` before training the SVM models.
+
+Standardization is performed to scale the input features before they are used for model training.
+
+---
 
 ## SVM Models
 
-Three SVM kernels are used in this experiment:
+Three SVM kernel functions are used in this experiment:
 
-1. Linear Kernel
-2. Polynomial Kernel
-3. RBF Kernel
+1. **Linear Kernel**
+2. **Polynomial Kernel**
+3. **RBF Kernel**
 
-Each model is trained using the same training dataset and evaluated using the same testing dataset.
+Each model is trained and tested using the same dataset split for comparison.
+
+---
 
 ## Accuracy Results
 
-The models are evaluated using Accuracy.
+The performance of each SVM model is evaluated using **Accuracy**.
 
 | SVM Kernel | Accuracy |
-|---|---:|
-| Linear | 96.67% |
-| Polynomial | 96.67% |
-| RBF | 100.00% |
+| ---------- | -------: |
+| Linear     |   96.67% |
+| Polynomial |   96.67% |
+| RBF        |  100.00% |
 
-### Accuracy Comparison
+### SVM Kernel Accuracy Comparison
 
 ![SVM Kernel Accuracy](images/svm_accuracy.png)
 
-Based on this experiment, the **RBF Kernel achieved the highest accuracy of 100.00%**.
+The experimental results show that the **RBF Kernel achieved the highest accuracy at 100.00%**.
+
+---
 
 ## Prediction Results
 
-The program predicts the species of the testing dataset using all three SVM models.
+The program predicts the Iris species from the testing dataset using all three SVM models.
 
 The prediction results contain:
 
-```text
-Actual
-Linear
-Polynomial
-RBF
-```
+* `Actual` - Actual species
+* `Linear` - Prediction from Linear Kernel
+* `Polynomial` - Prediction from Polynomial Kernel
+* `RBF` - Prediction from RBF Kernel
 
 Example output:
 
@@ -178,15 +198,15 @@ Iris-setosa         Iris-setosa         Iris-setosa         Iris-setosa
 Iris-virginica      Iris-virginica      Iris-virginica      Iris-virginica
 ```
 
-The `Actual` column represents the actual species, while the other columns show the predictions generated by each SVM kernel.
+---
 
 ## Libraries
 
 The following Python libraries are used:
 
-- pandas
-- matplotlib
-- scikit-learn
+* pandas
+* matplotlib
+* scikit-learn
 
 Install the required libraries using:
 
@@ -194,9 +214,11 @@ Install the required libraries using:
 pip install -r requirements.txt
 ```
 
+---
+
 ## Running the Program
 
-Run the program from the `LAB05` directory:
+Open the terminal in the `LAB05` directory and run:
 
 ```bash
 python main.py
@@ -204,26 +226,43 @@ python main.py
 
 The program will display:
 
-- Dataset information
-- Missing values
-- Training and testing data size
-- Accuracy of each SVM kernel
-- Best performing kernel
-- Prediction results
-- Result graphs
+* Dataset information
+* Missing values
+* Training and testing data size
+* Accuracy scores for each SVM kernel
+* Best performing kernel
+* Prediction results
+* Result graphs
+
+The generated graphs are automatically saved in the `images` directory.
+
+---
 
 ## Conclusion
 
-In this laboratory, Support Vector Machine was applied to classify the Iris dataset.
+In this laboratory, Support Vector Machine was applied to classify the Iris dataset using three different kernel functions: **Linear, Polynomial, and RBF**.
 
-The input features were standardized before training, and three SVM kernels were compared: **Linear, Polynomial, and RBF**.
+The input features were standardized before training, and each model was evaluated using Accuracy.
 
 The experimental results were:
 
-- Linear Kernel: **96.67%**
-- Polynomial Kernel: **96.67%**
-- RBF Kernel: **100.00%**
+* **Linear Kernel: 96.67%**
+* **Polynomial Kernel: 96.67%**
+* **RBF Kernel: 100.00%**
 
-The **RBF Kernel achieved the highest accuracy** in this experiment.
+The **RBF Kernel achieved the highest accuracy** for the dataset and train/test split used in this experiment.
 
-The results show that different SVM kernel functions can produce different classification performance on the same dataset.
+**สรุปผลการทดลอง:** จากการเปรียบเทียบ SVM ทั้ง 3 Kernel พบว่า RBF Kernel ให้ค่า Accuracy สูงที่สุดที่ 100.00% ส่วน Linear และ Polynomial ให้ค่า Accuracy เท่ากันที่ 96.67% แสดงให้เห็นว่าการเลือก Kernel ที่เหมาะสมมีผลต่อประสิทธิภาพในการจำแนกข้อมูล
+
+---
+
+## Files
+
+* `Iris.csv` - Dataset used in this experiment
+* `main.py` - Main Python program
+* `requirements.txt` - Required Python libraries
+* `images/` - Graphs generated from the experiment
+
+---
+
+**LAB05 - Support Vector Machine (SVM)**
