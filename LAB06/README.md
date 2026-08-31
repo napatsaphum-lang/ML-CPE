@@ -953,6 +953,6 @@ Finally, the model with the highest Testing Accuracy is selected and saved for f
 
 # References
 
-1. **Iris Species Dataset - Kaggle**  
-   Dataset used in this laboratory.  
-   https://www.kaggle.com/datasets/uciml/iris
+**Iris Species Dataset - Kaggle**  
+ Dataset used in this laboratory.  
+  https://www.kaggle.com/datasets/uciml/iris
