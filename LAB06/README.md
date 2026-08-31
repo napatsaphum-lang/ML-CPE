@@ -956,11 +956,3 @@ Finally, the model with the highest Testing Accuracy is selected and saved for f
 1. **Iris Species Dataset - Kaggle**  
    Dataset used in this laboratory.  
    https://www.kaggle.com/datasets/uciml/iris
-
-2. **TensorFlow / Keras Documentation**  
-   Reference for building and training the Neural Network.  
-   https://www.tensorflow.org/
-
-3. **Scikit-learn Documentation**  
-   Reference for data preprocessing, StandardScaler, LabelEncoder, and dataset splitting.  
-   https://scikit-learn.org/
