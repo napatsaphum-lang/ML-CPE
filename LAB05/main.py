@@ -2,121 +2,126 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from sklearn.model_selection import train_test_split  # ใช้แบ่งข้อมูล Train และ Test
-from sklearn.preprocessing import StandardScaler      # ใช้ปรับ Scale ของข้อมูล
-from sklearn.svm import SVC                           # ใช้สร้างโมเดล SVM
-from sklearn.metrics import accuracy_score            # ใช้คำนวณ Accuracy
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
 
-os.makedirs("images", exist_ok=True)  # สร้างโฟลเดอร์ images สำหรับเก็บกราฟ
+
+# สร้างโฟลเดอร์สำหรับเก็บกราฟ
+os.makedirs("images", exist_ok=True)
+
 
 # ===== 1. Load Dataset =====
-data = pd.read_csv("Iris.csv")  # อ่านข้อมูล Iris Dataset จากไฟล์ CSV
+data = pd.read_csv("Iris.csv")
 
 print("===== Iris Dataset =====")
-print(data.head())  # แสดงข้อมูล 5 แถวแรก
+print(data.head())
 
 print("\n===== Dataset Information =====")
-print("Rows:", data.shape[0])        # แสดงจำนวนแถว
-print("Columns:", data.shape[1])     # แสดงจำนวนคอลัมน์
+print("Rows:", data.shape[0])
+print("Columns:", data.shape[1])
 
 print("\n===== Missing Values =====")
-print(data.isnull().sum())           # ตรวจสอบจำนวนข้อมูลที่หายไป
+print(data.isnull().sum())
 
 print("\n===== Species =====")
-print(data["Species"].value_counts())  # นับจำนวนข้อมูลของแต่ละ Species
+print(data["Species"].value_counts())
 
 
-# ===== 2. Features and Target =====
+# ===== 2. กำหนด Features (X) และ Target (y) =====
 features = [
-    "SepalLengthCm",   # ความยาวกลีบเลี้ยง
-    "SepalWidthCm",    # ความกว้างกลีบเลี้ยง
-    "PetalLengthCm",   # ความยาวกลีบดอก
-    "PetalWidthCm"     # ความกว้างกลีบดอก
+    "SepalLengthCm",
+    "SepalWidthCm",
+    "PetalLengthCm",
+    "PetalWidthCm"
 ]
 
-X = data[features]       # กำหนด Features ที่ใช้เป็น Input ของโมเดล
-y = data["Species"]      # กำหนด Species เป็น Target ที่ต้องการทำนาย
+X = data[features]
+y = data["Species"]
 
 
-# ===== 3. Train / Test Split =====
+# ===== 3. แบ่งข้อมูล Train 80% และ Test 20% =====
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y,                # ข้อมูล Features และ Target
-    test_size=0.2,       # แบ่ง Test 20% และ Train 80%
-    random_state=42      # กำหนดการสุ่มให้ได้ข้อมูลชุดเดิมทุกครั้ง
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
 )
 
 print("\n===== Train Test Split =====")
-print("Training Data:", len(X_train))  # จำนวนข้อมูลสำหรับ Train
-print("Testing Data:", len(X_test))     # จำนวนข้อมูลสำหรับ Test
+print("Training Data:", len(X_train))
+print("Testing Data:", len(X_test))
 
 
-# ===== 4. Standardization =====
-scaler = StandardScaler()  # สร้างตัวปรับ Scale ของ Features
+# ===== 4. ปรับ Scale ของข้อมูล =====
+scaler = StandardScaler()
 
-X_train = scaler.fit_transform(X_train)  # เรียนรู้ Scale จาก Train และปรับข้อมูล
-X_test = scaler.transform(X_test)        # ปรับ Test ด้วย Scale ที่ได้จาก Train
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
 
-# ===== 5. Train SVM Models =====
+# ===== 5. สร้างและทดสอบ SVM ทั้ง 3 Kernel =====
 kernels = {
-    "Linear": "linear",       # Linear Kernel
-    "Polynomial": "poly",     # Polynomial Kernel
-    "RBF": "rbf"              # Radial Basis Function Kernel
+    "Linear": "linear",
+    "Polynomial": "poly",
+    "RBF": "rbf"
 }
 
-predictions = {}      # เก็บผลการทำนายของแต่ละ Kernel
-accuracy_result = {}  # เก็บค่า Accuracy ของแต่ละ Kernel
+predictions = {}
+accuracy_result = {}
 
-for name, kernel in kernels.items():       # วนทดสอบ SVM ทั้ง 3 Kernel
-    model = SVC(kernel=kernel)             # สร้าง SVM ตาม Kernel ปัจจุบัน
-    model.fit(X_train, y_train)            # Train โมเดลด้วย Training Data
+for name, kernel in kernels.items():
+    model = SVC(kernel=kernel)
+    model.fit(X_train, y_train)
 
-    pred = model.predict(X_test)           # ทำนาย Species จาก Testing Data
-    predictions[name] = pred               # เก็บผล Prediction
-    accuracy_result[name] = accuracy_score(y_test, pred)  # คำนวณ Accuracy
+    pred = model.predict(X_test)
+
+    predictions[name] = pred
+    accuracy_result[name] = accuracy_score(y_test, pred)
 
 
-# ===== 6. Show Accuracy =====
+# ===== 6. แสดง Accuracy ของแต่ละ Kernel =====
 print("\n===== SVM Accuracy =====")
 
-for name, acc in accuracy_result.items():  # วนแสดง Accuracy ของแต่ละ Kernel
+for name, acc in accuracy_result.items():
     print(f"{name} Kernel: {acc * 100:.2f}%")
 
 
-# ===== 7. Find Best Kernel =====
+# ===== 7. หา Kernel ที่มี Accuracy สูงที่สุด =====
 best_kernel = max(
     accuracy_result,
-    key=accuracy_result.get  # เลือก Kernel ที่มี Accuracy สูงที่สุด
+    key=accuracy_result.get
 )
 
 print("\n===== Best Kernel =====")
-print("Best Kernel:", best_kernel)  # แสดง Kernel ที่ดีที่สุด
-print(f"Accuracy: {accuracy_result[best_kernel] * 100:.2f}%")  # แสดง Accuracy
+print("Best Kernel:", best_kernel)
+print(f"Accuracy: {accuracy_result[best_kernel] * 100:.2f}%")
 
 
-# ===== 8. Prediction Results =====
+# ===== 8. แสดงผลจริงเทียบกับผลการทำนาย =====
 result = pd.DataFrame({
-    "Actual": y_test.values,  # คำตอบจริง
-    **predictions             # ผลทำนายของ Linear, Polynomial และ RBF
+    "Actual": y_test.values,
+    **predictions
 })
 
 print("\n===== Prediction Results =====")
-print(result.to_string(index=False))  # แสดงผลจริงเทียบกับผล Prediction
+print(result.to_string(index=False))
 
 
-# ===== 9. Graph: SVM Accuracy =====
-names = list(accuracy_result.keys())                 # ชื่อ Kernel
-scores = [acc * 100 for acc in accuracy_result.values()]  # Accuracy เป็น %
+# ===== 9. กราฟเปรียบเทียบ Accuracy =====
+names = list(accuracy_result.keys())
+scores = [acc * 100 for acc in accuracy_result.values()]
 
-plt.figure(figsize=(7, 5))            # กำหนดขนาดกราฟ
-bars = plt.bar(names, scores)          # สร้างกราฟแท่ง Accuracy
+plt.figure(figsize=(7, 5))
+bars = plt.bar(names, scores)
 
-plt.title("SVM Kernel Accuracy")       # ชื่อกราฟ
-plt.xlabel("Kernel")                   # ชื่อแกน X
-plt.ylabel("Accuracy (%)")             # ชื่อแกน Y
-plt.ylim(0, 105)                       # กำหนดช่วงแกน Y
+plt.title("SVM Kernel Accuracy")
+plt.xlabel("Kernel")
+plt.ylabel("Accuracy (%)")
+plt.ylim(0, 105)
 
-for bar, value in zip(bars, scores):   # แสดงค่า Accuracy บนแต่ละแท่ง
+for bar, value in zip(bars, scores):
     plt.text(
         bar.get_x() + bar.get_width() / 2,
         value + 1,
@@ -124,22 +129,25 @@ for bar, value in zip(bars, scores):   # แสดงค่า Accuracy บน�
         ha="center"
     )
 
-plt.tight_layout()                              # จัดตำแหน่งกราฟให้พอดี
-plt.savefig("images/svm_accuracy.png", dpi=300) # บันทึกกราฟเป็นไฟล์ PNG
-plt.show()                                      # แสดงกราฟ
+plt.tight_layout()
+plt.savefig("images/svm_accuracy.png", dpi=300)
+plt.show()
 
 
-# ===== 10. Graph: Species Count =====
-species_count = data["Species"].value_counts()  # นับจำนวนแต่ละ Species
+# ===== 10. กราฟแสดงจำนวนข้อมูลแต่ละ Species =====
+species_count = data["Species"].value_counts()
 
 plt.figure(figsize=(7, 5))
-bars = plt.bar(species_count.index, species_count.values)  # สร้างกราฟจำนวน Species
+bars = plt.bar(
+    species_count.index,
+    species_count.values
+)
 
 plt.title("Number of Iris Species")
 plt.xlabel("Species")
 plt.ylabel("Number of Samples")
 
-for bar, value in zip(bars, species_count.values):  # แสดงจำนวนบนแท่งกราฟ
+for bar, value in zip(bars, species_count.values):
     plt.text(
         bar.get_x() + bar.get_width() / 2,
         value + 0.5,
@@ -148,31 +156,31 @@ for bar, value in zip(bars, species_count.values):  # แสดงจำนว�
     )
 
 plt.tight_layout()
-plt.savefig("images/species_count.png", dpi=300)  # บันทึกกราฟจำนวน Species
+plt.savefig("images/species_count.png", dpi=300)
 plt.show()
 
 
-# ===== 11. Graph: Iris Scatter Plot =====
+# ===== 11. Scatter Plot แสดงการกระจายของ Species =====
 plt.figure(figsize=(7, 5))
 
-for species, group in data.groupby("Species"):  # แยกข้อมูลตาม Species
+for species, group in data.groupby("Species"):
     plt.scatter(
-        group["PetalLengthCm"],  # แกน X = Petal Length
-        group["PetalWidthCm"],   # แกน Y = Petal Width
-        label=species            # ชื่อ Species
+        group["PetalLengthCm"],
+        group["PetalWidthCm"],
+        label=species
     )
 
 plt.title("Iris Dataset")
 plt.xlabel("Petal Length (cm)")
 plt.ylabel("Petal Width (cm)")
-plt.legend()  # แสดงชื่อ Species ในกราฟ
+plt.legend()
 
 plt.tight_layout()
-plt.savefig("images/iris_scatter.png", dpi=300)  # บันทึก Scatter Plot
+plt.savefig("images/iris_scatter.png", dpi=300)
 plt.show()
 
 
-# ===== 12. Show Saved Files =====
+# ===== 12. แสดงไฟล์กราฟที่บันทึก =====
 print("\n===== Images Saved =====")
 
 for file in [
@@ -180,4 +188,4 @@ for file in [
     "species_count.png",
     "iris_scatter.png"
 ]:
-    print("images/" + file)  # แสดงตำแหน่งไฟล์รูปที่บันทึก
+    print("images/" + file)
