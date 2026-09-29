@@ -12,9 +12,6 @@
 
 ใช้ Dataset **Fashion MNIST PNG** จาก Kaggle
 
-**แหล่งที่มา:**  
-https://www.kaggle.com/datasets/andhikawb/fashion-mnist-png
-
 จาก Dataset ต้นฉบับ ได้นำข้อมูลมาใช้ในการทดลองจำนวนทั้งหมด 1,000 ภาพ แบ่งเป็น 10 Classes ตั้งแต่ Class 0 ถึง Class 9
 
 จำนวนข้อมูลที่ใช้ประกอบด้วย
@@ -67,13 +64,32 @@ Dense 128 Neurons
         v
 Output 10 Classes
 
-ค่าที่ใช้ในการ Train Model
-- Optimizer: Adam
-- Learning Rate: 0.0005
-- Loss Function: Sparse Categorical Crossentropy
-- Epochs: 10
-- Batch Size: 32
-ผลการทดลอง
-Training and Validation Accuracy
+## ค่าที่ใช้ในการ Train Model
+
+- **Optimizer:** Adam
+- **Learning Rate:** 0.0005
+- **Loss Function:** Sparse Categorical Crossentropy
+- **Epochs:** 10
+- **Batch Size:** 32
+
+---
+
+## ผลการทดลอง
+
+### Training and Validation Accuracy
+
 กราฟแสดงค่า Accuracy ของ Training และ Validation ในแต่ละ Epoch
- 
+
+![Training Accuracy](outputs/training_accuracy.png)
+
+จากกราฟพบว่า Training Accuracy มีแนวโน้มเพิ่มขึ้นตามจำนวน Epoch ขณะที่ Validation Accuracy มีแนวโน้มเพิ่มขึ้นโดยรวม แม้ว่าจะมีการเปลี่ยนแปลงเล็กน้อยในบางช่วง
+
+---
+
+### Training and Validation Loss
+
+กราฟแสดงค่า Loss ของ Training และ Validation ในแต่ละ Epoch
+
+![Training Loss](outputs/training_loss.png)
+
+จากกราฟพบว่า Training Loss ลดลงอย่างต่อเนื่อง ส่วน Validation Loss มีแนวโน้มลดลงโดยรวม แสดงว่าโมเดลสามารถเรียนรู้ข้อมูลได้ดีขึ้นเมื่อจำนวน Epoch เพิ่มขึ้น
