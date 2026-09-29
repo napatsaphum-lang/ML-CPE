@@ -64,6 +64,7 @@ Dense 128 Neurons
         v
 Output 10 Classes
 
+```
 ## ค่าที่ใช้ในการ Train Model
 
 - **Optimizer:** Adam
