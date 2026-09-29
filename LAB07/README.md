@@ -77,39 +77,3 @@ Output 10 Classes
 Training and Validation Accuracy
 กราฟแสดงค่า Accuracy ของ Training และ Validation ในแต่ละ Epoch
  
-จากกราฟพบว่า Training Accuracy มีแนวโน้มเพิ่มขึ้นอย่างต่อเนื่องตามจำนวน Epoch ขณะที่ Validation Accuracy มีแนวโน้มเพิ่มขึ้นโดยรวม แม้ว่าจะมีการเปลี่ยนแปลงเล็กน้อยในบางช่วง
-แสดงให้เห็นว่าโมเดลสามารถเรียนรู้จาก Training Dataset และสามารถนำรูปแบบที่เรียนรู้ไปใช้กับ Validation Dataset ได้ในระดับหนึ่ง
-Training and Validation Loss
-กราฟแสดงค่า Loss ของ Training และ Validation
- 
-จากกราฟพบว่า Training Loss ลดลงอย่างต่อเนื่องตลอดการ Train ส่วน Validation Loss มีแนวโน้มลดลงโดยรวม แต่มีการเปลี่ยนแปลงเล็กน้อยในบาง Epoch
-ผลดังกล่าวแสดงให้เห็นว่าโมเดลมีการเรียนรู้ที่ดีขึ้นเมื่อจำนวน Epoch เพิ่มขึ้น
-Confusion Matrix
-Confusion Matrix ใช้สำหรับวิเคราะห์ผลการทำนายของโมเดลในแต่ละ Class
- 
-จาก Testing Dataset จำนวน 200 ภาพ โมเดลสามารถทำนายถูกได้ทั้งหมด 151 ภาพ คิดเป็น Accuracy ประมาณ 75.5%
-จาก Confusion Matrix พบว่า
-- Class 5 ทำนายถูก 20 จาก 20 ภาพ
-- Class 9 ทำนายถูก 20 จาก 20 ภาพ
-- Class 8 ทำนายถูก 19 จาก 20 ภาพ
-- Class 1 ทำนายถูก 18 จาก 20 ภาพ
-- Class 7 ทำนายถูก 17 จาก 20 ภาพ
-ขณะที่บาง Class เช่น Class 2 และ Class 6 ยังมีการทำนายสับสนกับ Class อื่นอยู่
-Prediction
-ทำการสุ่มข้อมูลจาก Testing Dataset จำนวน 4 ภาพ เพื่อนำมาทดสอบกับ CNN Model ที่ Train แล้ว
- 
-จากตัวอย่างพบว่า
-- True Class 9 → Predict Class 9
-- True Class 2 → Predict Class 2
-- True Class 7 → Predict Class 7
-- True Class 6 → Predict Class 2
-จากตัวอย่างทั้งหมด 4 ภาพ โมเดลสามารถทำนายถูก 3 ภาพ และทำนายผิด 1 ภาพ
-สรุปผลการทดลอง
-จากการทดลองใช้ Convolutional Neural Network สำหรับจำแนกภาพจาก Dataset Fashion MNIST PNG โดยใช้ข้อมูลจำนวนทั้งหมด 1,000 ภาพ พบว่า CNN Model สามารถเรียนรู้และจำแนกข้อมูลภาพได้
-หลังจาก Train Model จำนวน 10 Epochs พบว่า Training Accuracy มีแนวโน้มเพิ่มขึ้น ขณะที่ Training Loss ลดลงอย่างต่อเนื่อง ส่วน Validation Accuracy และ Validation Loss มีแนวโน้มดีขึ้นโดยรวม
-จากการทดสอบด้วย Testing Dataset จำนวน 200 ภาพ โมเดลสามารถทำนายถูก 151 ภาพ คิดเป็น Accuracy ประมาณ 75.5%
-ผลการทดลองแสดงให้เห็นว่า CNN สามารถนำมาใช้สำหรับงานจำแนกภาพได้ แต่ยังมีบาง Class ที่มีลักษณะใกล้เคียงกันและทำให้เกิดความผิดพลาดในการทำนายได้
-อ้างอิง
-Kaggle - Fashion MNIST PNG Dataset
-https://www.kaggle.com/datasets/andhikawb/fashion-mnist-png
-```
