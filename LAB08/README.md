@@ -1,7 +1,5 @@
 # LAB08 - Deep Convolutional Neural Network (DCNN)
 
----
-
 ## 1. บทนำ (Introduction)
 
 การทดลอง LAB08 เป็นการศึกษาการทำงานของ Deep Convolutional Neural Network (DCNN) ซึ่งเป็นโครงข่ายประสาทเทียมที่นำมาใช้ในการจำแนกรูปภาพ โดยพัฒนาต่อยอดจาก Convolutional Neural Network (CNN) ด้วยการเพิ่มจำนวน Convolutional Layers เพื่อให้โมเดลสามารถเรียนรู้ลักษณะของภาพได้ละเอียดและซับซ้อนมากขึ้น
