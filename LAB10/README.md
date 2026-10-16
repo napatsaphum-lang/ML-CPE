@@ -1,77 +1,57 @@
-# LAB10 – Object Detection Using YOLOv8
+# LAB10 - Object Detection Using YOLOv8
 
-โปรเจกต์ LAB10 รายวิชา Machine Learning (04-624-201) ใช้ YOLOv8n ตรวจจับบอร์ดไมโครคอนโทรลเลอร์ 4 ประเภท และเปรียบเทียบผลเมื่อปรับ Epochs, Image Size และ Batch Size
+## 1. บทนำ (Introduction)
 
-## Dataset
+การทดลอง LAB10 เป็นการนำ YOLOv8 มาใช้ตรวจจับและจำแนกอุปกรณ์ไมโครคอนโทรลเลอร์จากรูปภาพ โดยโมเดลสามารถแสดงตำแหน่งวัตถุ (Bounding Box) ชื่ออุปกรณ์ และค่าความมั่นใจ (Confidence Score)
 
-Microcontroller Detection จาก Kaggle: https://www.kaggle.com/datasets/tannergi/microcontroller-detection
+ในการทดลองนี้จะเปรียบเทียบจำนวน Epochs, Image Size และ Batch Size ที่แตกต่างกัน เพื่อศึกษาผลต่อประสิทธิภาพการตรวจจับวัตถุ
 
-ประกอบด้วย 149 ภาพ และ Label แบบ Pascal VOC XML โปรแกรมจะแปลงเป็น YOLO TXT และแบ่ง Train/Val/Test อัตโนมัติ (Train 114, Val 28, Test 7 ภาพ) 4 Classes: ESP8266, Heltec ESP32 LoRa, Arduino Nano และ Raspberry Pi 3
+## 2. Dataset ที่ใช้
 
-## โครงสร้าง
+**Dataset:** [Microcontroller Detection – Kaggle](https://www.kaggle.com/datasets/tannergi/microcontroller-detection)
+
+Dataset ประกอบด้วยภาพอุปกรณ์อิเล็กทรอนิกส์ 4 ประเภท
+
+| Class | อุปกรณ์ |
+|---|---|
+| 0 | ESP8266 |
+| 1 | Heltec ESP32 LoRa |
+| 2 | Arduino Nano |
+| 3 | Raspberry Pi 3 |
+
+ใช้ภาพทั้งหมด 149 ภาพ โดยข้อมูล Bounding Box เดิมอยู่ในรูปแบบ XML และนำมาแปลงเป็น YOLO TXT สำหรับการ Training
+
+## 3. โครงสร้างโปรเจกต์ (Project Structure)
 
 ```text
 LAB10/
-├── archive (8).zip            # วางไฟล์ Kaggle ที่นี่ (ไม่อัปโหลดขึ้น GitHub)
-├── dataset/                  # YOLO dataset (สร้างอัตโนมัติ)
 ├── detection/
-│   ├── data_loader.py        # แปลง XML และแบ่งข้อมูล
-│   ├── train.py              # ฝึก YOLOv8n
-│   ├── evaluate.py           # Precision, Recall, mAP, comparison
-│   ├── main.py               # เรียกทุกขั้นตอน
-│   ├── image_test.py         # ภาพนิ่ง
-│   ├── video_test.py         # วิดีโอ
-│   └── realtime_test.py      # กล้อง
-├── outputs/                  # กราฟและผลการฝึก
+│   ├── main.py           # โปรแกรมหลัก
+│   ├── data_loader.py    # เตรียม Dataset และแปลง XML
+│   ├── train.py          # ฝึก YOLOv8
+│   ├── evaluate.py       # ประเมิน Precision, Recall, mAP
+│   ├── image_test.py     # ทดสอบรูปภาพ
+│   ├── video_test.py     # ทดสอบวิดีโอ
+│   └── realtime_test.py  # ทดสอบ Webcam
+│
+├── dataset/               # ข้อมูล Train / Val / Test
+├── outputs/               # โมเดลและกราฟผลการทดลอง
 ├── requirements.txt
 └── README.md
 ```
 
-## วิธีรัน (VS Code – Windows)
+## 4. ขั้นตอนการทดลอง (Methodology)
 
-เปิด Terminal ที่โฟลเดอร์ LAB10:
+1. โหลด Dataset จาก Kaggle และแปลง Annotation จาก XML เป็น YOLO
+2. แบ่งข้อมูลเป็น Training, Validation และ Testing
+3. โหลด Pretrained YOLOv8n Model
+4. ฝึกโมเดลโดยปรับ Epochs, Image Size และ Batch Size
+5. ประเมินผลด้วย Precision, Recall และ mAP
+6. ทดสอบการตรวจจับผ่านรูปภาพ วิดีโอ และ Webcam
 
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m detection.main --quick
-```
+### รูปแบบการทดลอง
 
-ถ้าทดลองเร็วสำเร็จแล้ว รัน Training ทุกโมเดล:
-
-```powershell
-.\.venv\Scripts\python.exe -m detection.main
-```
-
-ทดลองบางโมเดล เช่น A และ B:
-
-```powershell
-.\.venv\Scripts\python.exe -m detection.main --models A B
-```
-
-ทดสอบภาพหลังฝึก Model A แบบเต็ม:
-
-```powershell
-.\.venv\Scripts\python.exe -m detection.image_test
-```
-
-ทดสอบวิดีโอ:
-
-```powershell
-.\.venv\Scripts\python.exe -m detection.video_test --source demo.mp4
-```
-
-ทดสอบ Webcam (กด Q หรือปิดหน้าต่างเพื่อหยุด):
-
-```powershell
-.\.venv\Scripts\python.exe -m detection.realtime_test
-```
-
-**หมายเหตุ:** คำสั่งที่อยู่ใน README ต้องรันจากโฟลเดอร์ LAB10 และใช้ `-m detection.main` ไม่ใช่กด Run Python File เพื่อหลีกเลี่ยงปัญหา relative imports
-
-## การทดลอง
-
-| Model | Epochs | Image size | Batch |
+| Model | Epochs | Image Size | Batch |
 |---|---:|---:|---:|
 | A | 10 | 416 | 8 |
 | B | 20 | 416 | 8 |
@@ -79,16 +59,102 @@ py -3.11 -m venv .venv
 | D | 20 | 640 | 8 |
 | E | 20 | 416 | 16 |
 
-ใช้ pretrained `yolov8n.pt` ใหม่ทุกการทดลอง และฝึกบน CPU เป็นค่าเริ่มต้น หากใช้ GPU ที่รองรับสามารถเปลี่ยน `device` ใน `detection/train.py` ได้
+## 5. วิธีรันโปรแกรม (How to Run)
 
-## ผลการทดลอง
+ติดตั้ง Libraries:
 
-เมื่อฝึกเสร็จ Ultralytics จะบันทึกกราฟ `results.png`, `results.csv`, กราฟ PR และ Confusion Matrix ลงใน `outputs/model_*/` ส่วนผลประเมิน Test และการเปรียบเทียบจะอยู่ใน `outputs/eval_*` และ `outputs/comparison.csv`, `comparison.png`
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
 
-ค่า Precision, Recall และ mAP ต้องใช้ผลฝึกจริงก่อนจึงจะนำไปสรุปได้ เนื่องจาก Dataset มีเพียง 149 ภาพ ผลทดสอบอาจผันผวน
+ทดสอบการทำงานเบื้องต้น:
 
-## แหล่งอ้างอิง
+```powershell
+.\.venv\Scripts\python.exe -m detection.main --quick
+```
 
-- Dataset: https://www.kaggle.com/datasets/tannergi/microcontroller-detection
-- Ultralytics: https://docs.ultralytics.com/
-- เอกสารประกอบบทเรียน Chapter 10: Object Detection II
+ฝึกโมเดลทั้งหมด:
+
+```powershell
+.\.venv\Scripts\python.exe -m detection.main
+```
+
+### ทดสอบ Object Detection
+
+**ตรวจจับจากรูปภาพ**
+
+```powershell
+.\.venv\Scripts\python.exe -m detection.image_test
+```
+
+**ตรวจจับจากวิดีโอ**
+
+```powershell
+.\.venv\Scripts\python.exe -m detection.video_test
+```
+
+**ตรวจจับผ่าน Webcam**
+
+```powershell
+.\.venv\Scripts\python.exe -m detection.realtime_test
+```
+
+## 6. ผลการทดลอง (Experimental Results)
+
+### 6.1 Training และ Validation Results
+
+กราฟแสดงการเปลี่ยนแปลงของ Loss, Precision, Recall และ mAP ระหว่างการฝึกโมเดล
+
+**Model A – Training Results**
+
+![Model A Training](outputs/model_A/results.png)
+
+**Model B – Training Results**
+
+![Model B Training](outputs/model_B/results.png)
+
+**Model C – Training Results**
+
+![Model C Training](outputs/model_C/results.png)
+
+### 6.2 Model Comparison
+
+กราฟเปรียบเทียบประสิทธิภาพการตรวจจับของแต่ละโมเดล
+
+![Model Comparison](outputs/comparison.png)
+
+### 6.3 Confusion Matrix
+
+ใช้ตรวจสอบการจำแนกอุปกรณ์แต่ละประเภทว่าถูกต้องหรือผิดพลาดมากน้อยเพียงใด
+
+![Confusion Matrix](outputs/model_B/confusion_matrix.png)
+
+### 6.4 Object Detection Results
+
+แสดงผลตรวจจับไมโครคอนโทรลเลอร์ด้วย Bounding Box พร้อม Class และ Confidence Score
+
+*เพิ่มภาพผลการตรวจจับจริงจากโฟลเดอร์ outputs หลังการทดสอบ*
+
+## 7. วิเคราะห์ผลการทดลอง (Discussion)
+
+การทดลองนี้เปรียบเทียบปัจจัยหลัก 3 อย่าง ได้แก่
+
+- **Epochs:** ศึกษาว่าการเพิ่มจำนวนรอบฝึกส่งผลต่อ Precision, Recall และ mAP อย่างไร
+- **Image Size:** เปรียบเทียบความละเอียดของภาพว่ามีผลต่อการตรวจจับวัตถุหรือไม่
+- **Batch Size:** ศึกษาผลของจำนวนภาพที่ใช้ในแต่ละรอบการปรับน้ำหนักโมเดล
+
+เนื่องจาก Dataset มีจำนวนภาพไม่มาก ผลการตรวจจับอาจเปลี่ยนแปลงได้ตามการแบ่งข้อมูลและการฝึกโมเดล จึงต้องพิจารณาค่า Validation Loss และ mAP ร่วมกัน
+
+## 8. สรุป (Conclusion)
+
+การทดลอง LAB10 เป็นการศึกษาการตรวจจับวัตถุด้วย YOLOv8 โดยนำมาใช้กับอุปกรณ์ไมโครคอนโทรลเลอร์ 4 ประเภท
+
+จากการทดลองทำให้เข้าใจขั้นตอนการเตรียม Dataset การฝึกโมเดล Object Detection และการประเมินประสิทธิภาพด้วย Precision, Recall และ mAP รวมถึงแนวทางนำโมเดลไปใช้ตรวจจับวัตถุผ่านรูปภาพ วิดีโอ และ Webcam
+
+## 9. แหล่งอ้างอิง (References)
+
+- [Microcontroller Detection Dataset – Kaggle](https://www.kaggle.com/datasets/tannergi/microcontroller-detection)
+- [Ultralytics YOLO Documentation](https://docs.ultralytics.com/)
+- [OpenCV Documentation](https://docs.opencv.org/)
+- เอกสารประกอบการเรียน Machine Learning Chapter 10: Object Detection II
