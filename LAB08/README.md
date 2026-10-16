@@ -182,35 +182,45 @@ python -m classification.test_model
 
 ## 7. ผลการทดลอง (Experimental Results)
 
-ผลการทดลองจะประเมินจาก Accuracy และ Loss ของแต่ละโมเดล โดยนำผลลัพธ์มาเปรียบเทียบเพื่อหาว่าโครงสร้างใดมีประสิทธิภาพเหมาะสมกับ Dataset ที่ใช้
+### 7.1 Training and Validation Accuracy / Loss
 
-### 7.1 การเปรียบเทียบ Accuracy
+กราฟแสดงผลการฝึกโมเดล โดยเปรียบเทียบค่า Accuracy และ Loss ระหว่าง Training และ Validation ในแต่ละ Epoch เพื่อดูแนวโน้มการเรียนรู้ของโมเดล
 
-ผลลัพธ์จะถูกบันทึกไว้ในไฟล์ `comparison.csv` และแสดงกราฟผ่าน `comparison.png`
+**Model A – DCNN Training History**
 
-| Model | Epochs | Test Accuracy |
-|---|---:|---|
-| A | 10 | รอผลการทดลอง |
-| B | 10 | รอผลการทดลอง |
-| C | 10 | รอผลการทดลอง |
-| D | 20 | รอผลการทดลอง |
-| E | 30 | รอผลการทดลอง |
-| F | 10 | รอผลการทดลอง |
+![Model A Training History](classification/outputs/history_A.png)
 
-### 7.2 Training และ Validation Accuracy/Loss
+**Model B – DCNN Training History**
 
-กราฟ Training History ใช้ตรวจสอบการเปลี่ยนแปลงของ Accuracy และ Loss ในแต่ละ Epoch
+![Model B Training History](classification/outputs/history_B.png)
 
-สิ่งที่ต้องสังเกตคือ หาก Training Accuracy เพิ่มขึ้น แต่ Validation Accuracy ไม่เพิ่มขึ้นตาม หรือ Validation Loss กลับสูงขึ้น อาจแสดงว่าโมเดลเกิด Overfitting
+**Model C – DCNN Training History**
+
+![Model C Training History](classification/outputs/history_C.png)
+
+### 7.2 Model Accuracy Comparison
+
+กราฟเปรียบเทียบความแม่นยำของโมเดล DCNN ที่มีจำนวน Convolutional Layers, Dense Neurons และ Epochs แตกต่างกัน
+
+![Model Comparison](classification/outputs/comparison.png)
 
 ### 7.3 Confusion Matrix
 
-ใช้ตรวจสอบการทำนายของโมเดลว่าแต่ละ Class ถูกจำแนกได้ถูกต้องมากน้อยเพียงใด รวมถึงดูว่าโมเดลมีการทำนายสับสนระหว่างภาพประเภทใดบ้าง
+กราฟแสดงผลการจำแนกรูปภาพทั้ง 6 ประเภท โดยใช้ตรวจสอบว่าโมเดลสามารถทำนาย Class ใดได้ถูกต้อง และมีการทำนายผิดระหว่าง Class ใดมากที่สุด
+
+![Confusion Matrix](classification/outputs/confusion_matrix.png)
 
 ### 7.4 Prediction Results
 
-นำภาพจากชุด Testing มาทำนาย แล้วเปรียบเทียบผลที่โมเดลทำนายกับ Class จริง เพื่อทดสอบว่าโมเดลสามารถจำแนกภาพที่ไม่เคยใช้ฝึกได้หรือไม่
+แสดงตัวอย่างรูปภาพจากชุดทดสอบ พร้อมเปรียบเทียบ Class จริงกับผลการทำนายของโมเดล
 
+![Prediction Results](classification/outputs/predictions.png)
+
+### 7.5 วิเคราะห์ผลการทดลอง
+
+จากกราฟ Accuracy และ Loss สามารถนำมาวิเคราะห์ได้ว่า การเพิ่มจำนวน Epochs และ Convolutional Layers ส่งผลต่อการเรียนรู้ของโมเดลอย่างไร รวมถึงตรวจสอบว่าโมเดลมีแนวโน้มเกิด Overfitting หรือไม่
+
+ในการสรุปผลจะพิจารณาค่า Test Accuracy ร่วมกับ Validation Accuracy, Validation Loss และความซับซ้อนของโมเดล เพื่อเลือก Configuration ที่เหมาะสมกับ Dataset ที่ใช้
 ## 8. การวิเคราะห์ผลการทดลอง (Discussion)
 
 การวิเคราะห์ผลจะพิจารณา 3 ประเด็นหลัก
