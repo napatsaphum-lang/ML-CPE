@@ -1,10 +1,5 @@
 # LAB08 - Deep Convolutional Neural Network (DCNN)
 
-**รายวิชา:** Machine Learning (04-624-201)  
-**หัวข้อ:** Deep Convolutional Neural Network และการประยุกต์ใช้งาน  
-**Dataset:** Intel Image Classification  
-**เครื่องมือ:** Python, TensorFlow, Keras, VS Code
-
 ---
 
 ## 1. บทนำ (Introduction)
